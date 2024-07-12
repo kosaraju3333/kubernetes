@@ -1,0 +1,7 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: demo-storage
+provisioner: k8.io/local-cluster1-hostpath
+volumeBindingMode: Immediate
+reclaimPolicy: Delete
