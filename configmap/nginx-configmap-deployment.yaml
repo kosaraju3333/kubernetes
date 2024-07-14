@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  annotations:
+    kubernetes.io/change-cause: "Updating to alipine version"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      name: nginx-pod
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx:latest
+######## Using configMap info as env variables here we need to restart the conatiner to access the updated configMap info, it is not best practice in production######
+          env:
+            - name: nginx-username
+              valueFrom:
+                configMapKeyRef:
+                  name: nginx-cm-test
+                  key: username
+            - name: nginx-password
+              valueFrom:
+                configMapKeyRef:
+                  name: nginx-cm-test
+                  key: password
+          ports:
+            - containerPort: 80  
+######## Here accessing configMap info as Mounting ConfigMap volume here we don;t need to restart the container to access the updated config, it is best practice in production#### 
+          volumeMounts:
+            - name: nginx-user-details
+              mountPath: /opt
+      volumes:
+        - name: nginx-user-details
+          configMap:
+            name: nginx-cm-test
+
+        
