@@ -1,9 +1,10 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
+  namespace: default
   name: pod-reader
 rules:
-- apiGroups: [""] # "" indicates the core API group
-  verbs: ["get", "watch", "list"]
-  resources: ["pods", "pods/log"]
+- apiGroups: [""] # "" indicates the core API group use "*" for named API group
+  verbs: ["get", "watch", "list"] # use "*" for all verbs 
+  resources: ["pods", "pods/log"] # use "*" for all resources
   # resourceNames: ["nginx"]
