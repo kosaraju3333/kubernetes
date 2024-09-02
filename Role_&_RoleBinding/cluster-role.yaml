@@ -3,8 +3,8 @@ kind: ClusterRole
 metadata:
   name: pod-reader
 rules:
-- apiGroups: [""]
+- apiGroups: [""] # "" indicates the core API group use "*" for named API group
   # at the HTTP level, the name of the resource for accessing Secret
   # objects is "secrets"
-  verbs: ["get", "watch", "list"]
-  resources: ["pods", "pods/log"]
+  verbs: ["get", "watch", "list"] # use "*" for all verbs 
+  resources: ["pods", "pods/log"] # use "*" for all resources
